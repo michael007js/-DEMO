@@ -1,11 +1,13 @@
 package com.sss.framework.Library.HttpRequestLib.engline;
 
-import com.blankj.utilcode.HttpRequestLib.HttpRequestType;
-import com.blankj.utilcode.HttpRequestLib.constant.ErrorCodeConstant;
-import com.blankj.utilcode.HttpRequestLib.dao.IHttpListener;
-import com.blankj.utilcode.HttpRequestLib.dao.IHttpService;
-import com.blankj.utilcode.HttpRequestLib.util.HttpParseResponse;
-import com.blankj.utilcode.util.LogUtils;
+
+import com.sss.framework.Library.HttpRequestLib.HttpRequestType;
+import com.sss.framework.Library.HttpRequestLib.constant.ErrorCodeConstant;
+import com.sss.framework.Library.HttpRequestLib.dao.IFileUploadCallBack;
+import com.sss.framework.Library.HttpRequestLib.dao.IHttpListener;
+import com.sss.framework.Library.HttpRequestLib.dao.IHttpService;
+import com.sss.framework.Library.HttpRequestLib.util.HttpParseResponse;
+import com.sss.framework.Library.Log.LogUtils;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -24,6 +26,7 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -40,11 +43,15 @@ public class HttpService implements IHttpService {
     /**
      * 请求数据
      */
-    private Map<String ,String> requestData_KeyValue;
+    private Map<String, String> requestData_KeyValue;
     /**
      * 请求地址
      */
     private String url;
+    /**
+     * 需要上传的文件路径
+     */
+    private List<String> uploadFilePaths;
     /**
      * 请求数据
      */
@@ -54,6 +61,14 @@ public class HttpService implements IHttpService {
      */
     private IHttpListener iHttpListener;
 
+    /**
+     * 文件上传回调
+     */
+    private IFileUploadCallBack iFileUploadCallBack;
+
+    /**
+     * 超时时间(ms)
+     */
     private long timeOut = 30000;
 
     @Override
@@ -82,13 +97,25 @@ public class HttpService implements IHttpService {
     }
 
     @Override
+    public void setUploadFilePaths(List<String> uploadFilePaths) {
+        this.uploadFilePaths = uploadFilePaths;
+    }
+
+    @Override
+    public void setIFileUploadCallBack(IFileUploadCallBack iFileUploadCallBack) {
+        this.iFileUploadCallBack = iFileUploadCallBack;
+    }
+
+    @Override
     public void execute(int httpRequestType) {
-        if (HttpRequestType.Post_String==httpRequestType){
+        if (HttpRequestType.Post_String == httpRequestType) {
             httpPostString();
-        }else  if (HttpRequestType.Get==httpRequestType){
+        } else if (HttpRequestType.Get == httpRequestType) {
             httpGet();
-        }else  if (HttpRequestType.Post_Key_Value==httpRequestType){
+        } else if (HttpRequestType.Post_Key_Value == httpRequestType) {
             postKeyValue();
+        } else if (HttpRequestType.fileUpload == httpRequestType) {
+            uploadFile();
         }
 
     }
@@ -96,10 +123,10 @@ public class HttpService implements IHttpService {
     /**
      * 发起POST键值对请求
      */
-    private void postKeyValue( ){
+    private void postKeyValue() {
         try {
             URL url = new URL(this.url);//创建一个URL
-            HttpURLConnection connection  = (HttpURLConnection)url.openConnection();//通过该url获得与服务器的连接
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();//通过该url获得与服务器的连接
             httpURLConnection.setConnectTimeout((int) timeOut);//连接超时时间
             httpURLConnection.setUseCaches(false);//是否使用缓存
             httpURLConnection.setInstanceFollowRedirects(false);//是否系统自动处理跳转
@@ -114,7 +141,7 @@ public class HttpService implements IHttpService {
             }
             connection.connect();
             if (httpURLConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                String response= HttpParseResponse.getContent(httpURLConnection.getInputStream(),iHttpListener);
+                String response = HttpParseResponse.getContent(httpURLConnection.getInputStream(), iHttpListener);
                 if (iHttpListener != null) {
                     iHttpListener.onSuccess(response);
                 }
@@ -123,7 +150,7 @@ public class HttpService implements IHttpService {
                     iHttpListener.onFail(httpURLConnection.getResponseCode(), httpURLConnection.getResponseMessage());
                 }
             }
-        } catch (IOException  e) {
+        } catch (IOException e) {
             e.printStackTrace();
             if (iHttpListener != null) {
                 iHttpListener.onFail(ErrorCodeConstant.IOException, e.getMessage());
@@ -135,8 +162,8 @@ public class HttpService implements IHttpService {
     /**
      * 发起POST String请求
      */
-    private void httpPostString( ){
-        String response=null;
+    private void httpPostString() {
+        String response = null;
         try {
             URL url = new URL(this.url);
             httpURLConnection = (HttpURLConnection) url.openConnection();//打开连接
@@ -152,18 +179,18 @@ public class HttpService implements IHttpService {
             //字节流发送数据
             OutputStream ops = httpURLConnection.getOutputStream();
             BufferedOutputStream bos = new BufferedOutputStream(ops);
-            if (requestData!=null){
+            if (requestData != null) {
                 bos.write(requestData.getBytes());
-            }else {
+            } else {
                 bos.write("".getBytes());
             }
             bos.flush();
             bos.close();
-            bos=null;
+            bos = null;
             ops.close();
-            ops=null;
+            ops = null;
             if (httpURLConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                response= HttpParseResponse.getContent(httpURLConnection.getInputStream(),iHttpListener);
+                response = HttpParseResponse.getContent(httpURLConnection.getInputStream(), iHttpListener);
                 if (iHttpListener != null) {
                     iHttpListener.onSuccess(response);
                 }
@@ -172,7 +199,7 @@ public class HttpService implements IHttpService {
                     iHttpListener.onFail(httpURLConnection.getResponseCode(), httpURLConnection.getResponseMessage());
                 }
             }
-            LogUtils.e(url+"\n"+new String(requestData)+"\n"+httpURLConnection.getResponseCode()+"\n"+response+"\n"+httpURLConnection.getResponseMessage());
+            LogUtils.e(url + "\n" + new String(requestData) + "\n" + httpURLConnection.getResponseCode() + "\n" + response + "\n" + httpURLConnection.getResponseMessage());
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -184,13 +211,14 @@ public class HttpService implements IHttpService {
             if (iHttpListener != null) {
                 iHttpListener.onFail(ErrorCodeConstant.IOException, e.getMessage());
             }
-        }finally {
-            if (httpURLConnection!=null) {
+        } finally {
+            if (httpURLConnection != null) {
                 httpURLConnection.disconnect();
             }
-            httpURLConnection=null;
+            httpURLConnection = null;
         }
     }
+
     /**
      * 发起get请求
      */
@@ -254,22 +282,16 @@ public class HttpService implements IHttpService {
                 iHttpListener.onFail(ErrorCodeConstant.IOException, e.getMessage());
             }
         } finally {
+
             httpURLConnection.disconnect();
         }
     }
 
 
-
-
-
     /**
-     * 多文件上传的方法
-     *
-     * @param actionUrl：上传的路径
-     * @param uploadFilePaths：需要上传的文件路径，数组
-     * @return
+     * 多文件上传
      */
-    private String uploadFile(String actionUrl, String[] uploadFilePaths) {
+    private void uploadFile() {
         String end = "\r\n";
         String twoHyphens = "--";
         String boundary = "*****";
@@ -283,12 +305,10 @@ public class HttpService implements IHttpService {
 
         try {
             // 统一资源
-            URL url = new URL(actionUrl);
+            URL url = new URL(this.url);
             // 连接类的父类，抽象类
-            URLConnection urlConnection = url.openConnection();
             // http的连接类
-            HttpURLConnection httpURLConnection = (HttpURLConnection) urlConnection;
-
+            httpURLConnection = (HttpURLConnection) url.openConnection();
             // 设置是否从httpUrlConnection读入，默认情况下是true;
             httpURLConnection.setDoInput(true);
             // 设置是否向httpUrlConnection输出
@@ -306,12 +326,11 @@ public class HttpService implements IHttpService {
 
             // 设置DataOutputStream
             ds = new DataOutputStream(httpURLConnection.getOutputStream());
-            for (int i = 0; i < uploadFilePaths.length; i++) {
-                String uploadFile = uploadFilePaths[i];
+            for (int i = 0; i < uploadFilePaths.size(); i++) {
+                String uploadFile = uploadFilePaths.get(i);
                 String filename = uploadFile.substring(uploadFile.lastIndexOf("//") + 1);
                 ds.writeBytes(twoHyphens + boundary + end);
-                ds.writeBytes("Content-Disposition: form-data; " + "name=\"file" + i + "\";filename=\"" + filename
-                        + "\"" + end);
+                ds.writeBytes("Content-Disposition: form-data; " + "name=\"file" + i + "\";filename=\"" + filename + "\"" + end);
                 ds.writeBytes(end);
                 FileInputStream fStream = new FileInputStream(uploadFile);
                 int bufferSize = 1024;
@@ -322,15 +341,18 @@ public class HttpService implements IHttpService {
                 }
                 ds.writeBytes(end);
                 /* close streams */
+                if (iFileUploadCallBack != null) {
+                    iFileUploadCallBack.onUpLoadCallBack(i, uploadFilePaths.get(i), uploadFilePaths);
+                }
                 fStream.close();
             }
             ds.writeBytes(twoHyphens + boundary + twoHyphens + end);
             /* close streams */
             ds.flush();
-            if (httpURLConnection.getResponseCode() >= 300) {
-                throw new Exception(
-                        "HTTP Request is not success, Response code is " + httpURLConnection.getResponseCode());
-            }
+//            if (httpURLConnection.getResponseCode() >= 300) {
+//                throw new Exception(
+//                        "HTTP Request is not success, Response code is " + httpURLConnection.getResponseCode());
+//            }
 
             if (httpURLConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 inputStream = httpURLConnection.getInputStream();
@@ -342,17 +364,28 @@ public class HttpService implements IHttpService {
                     resultBuffer.append(tempLine);
                     resultBuffer.append("\n");
                 }
+                if (iHttpListener != null) {
+                    iHttpListener.onSuccess(resultBuffer.toString());
+                }
+            } else {
+                if (iHttpListener != null) {
+                    iHttpListener.onFail(httpURLConnection.getResponseCode(), httpURLConnection.getResponseMessage());
+                }
             }
 
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
+        } catch (IOException e) {
+            if (iHttpListener != null) {
+                iHttpListener.onFail(ErrorCodeConstant.IOException, e.getMessage());
+            }
             e.printStackTrace();
         } finally {
             if (ds != null) {
                 try {
                     ds.close();
                 } catch (IOException e) {
-                    // TODO Auto-generated catch block
+                    if (iHttpListener != null) {
+                        iHttpListener.onFail(ErrorCodeConstant.IOException, e.getMessage());
+                    }
                     e.printStackTrace();
                 }
             }
@@ -360,7 +393,9 @@ public class HttpService implements IHttpService {
                 try {
                     reader.close();
                 } catch (IOException e) {
-                    // TODO Auto-generated catch block
+                    if (iHttpListener != null) {
+                        iHttpListener.onFail(ErrorCodeConstant.IOException, e.getMessage());
+                    }
                     e.printStackTrace();
                 }
             }
@@ -368,7 +403,9 @@ public class HttpService implements IHttpService {
                 try {
                     inputStreamReader.close();
                 } catch (IOException e) {
-                    // TODO Auto-generated catch block
+                    if (iHttpListener != null) {
+                        iHttpListener.onFail(ErrorCodeConstant.IOException, e.getMessage());
+                    }
                     e.printStackTrace();
                 }
             }
@@ -376,23 +413,20 @@ public class HttpService implements IHttpService {
                 try {
                     inputStream.close();
                 } catch (IOException e) {
-                    // TODO Auto-generated catch block
+                    if (iHttpListener != null) {
+                        iHttpListener.onFail(ErrorCodeConstant.IOException, e.getMessage());
+                    }
                     e.printStackTrace();
                 }
             }
 
-            return resultBuffer.toString();
         }
     }
 
 
-
     /**
-     *
-     * @param urlPath
-     *            下载路径
-     * @param downloadDir
-     *            下载存放目录
+     * @param urlPath     下载路径
+     * @param downloadDir 下载存放目录
      * @return 返回下载文件
      */
     private File downloadFile(String urlPath, String downloadDir) {

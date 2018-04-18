@@ -1,13 +1,16 @@
 package com.sss.framework.Library.HttpRequestLib;
 
 
-import com.blankj.utilcode.HttpRequestLib.biz.HttpTask;
-import com.blankj.utilcode.HttpRequestLib.biz.HttpThreadChange;
-import com.blankj.utilcode.HttpRequestLib.dao.IDataListener;
-import com.blankj.utilcode.HttpRequestLib.dao.IHttpListener;
-import com.blankj.utilcode.HttpRequestLib.dao.IHttpService;
-import com.blankj.utilcode.HttpRequestLib.engline.HttpService;
 
+import com.sss.framework.Library.HttpRequestLib.biz.HttpTask;
+import com.sss.framework.Library.HttpRequestLib.biz.HttpThreadChange;
+import com.sss.framework.Library.HttpRequestLib.dao.IDataListener;
+import com.sss.framework.Library.HttpRequestLib.dao.IFileUploadCallBack;
+import com.sss.framework.Library.HttpRequestLib.dao.IHttpListener;
+import com.sss.framework.Library.HttpRequestLib.dao.IHttpService;
+import com.sss.framework.Library.HttpRequestLib.engline.HttpService;
+
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -58,6 +61,21 @@ public class HttpRequestUtils {
         IHttpService iHttpService = new HttpService();
         IHttpListener iHttpListener = new HttpThreadChange(iDataListener);
         HttpTask httpTask = new HttpTask(timeOut, HttpRequestType.Get, url, iHttpService, iHttpListener);
+        ThreadPoolManage.getInstance().setTimeOut(timeOut).execute(httpTask);
+
+    }
+
+    /**
+     * 文件上传
+     *
+     * @param timeOut       超时时间
+     * @param url           请求地址
+     * @param iDataListener 返回接口
+     */
+    public static void doPostUploadFiles(long timeOut, String url, List<String> filePath, IDataListener iDataListener, IFileUploadCallBack iFileUploadCallBack) {
+        IHttpService iHttpService = new HttpService();
+        IHttpListener iHttpListener = new HttpThreadChange(iDataListener);
+        HttpTask httpTask = new HttpTask(timeOut, filePath,HttpRequestType.Get, url, iHttpService, iHttpListener,iFileUploadCallBack);
         ThreadPoolManage.getInstance().setTimeOut(timeOut).execute(httpTask);
     }
 

@@ -1,6 +1,7 @@
 package com.sss.framework.Library.HttpRequestLib.dao;
 
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -48,4 +49,16 @@ public interface IHttpService {
      * @param iHttpListener
      */
     void setIHttpListener(IHttpListener iHttpListener);
+
+    /**
+     * 设置要上传的文件的路径
+     * @param uploadFilePaths
+     */
+    void setUploadFilePaths(List<String>uploadFilePaths);
+
+    /**
+     * 设置文件上传回调监听
+     * @param iFileUploadCallBack
+     */
+    void setIFileUploadCallBack(IFileUploadCallBack iFileUploadCallBack);
 }

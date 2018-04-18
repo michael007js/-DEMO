@@ -8,5 +8,6 @@ public class HttpRequestType {
     public static int Post_String = 1;
     public static int Post_Key_Value = 2;
     public static int Get = 3;
+    public static int fileUpload = 4;
 
 }

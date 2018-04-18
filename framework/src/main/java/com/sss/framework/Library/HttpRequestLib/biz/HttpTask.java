@@ -1,9 +1,12 @@
 package com.sss.framework.Library.HttpRequestLib.biz;
 
 
-import com.blankj.utilcode.HttpRequestLib.dao.IHttpListener;
-import com.blankj.utilcode.HttpRequestLib.dao.IHttpService;
 
+import com.sss.framework.Library.HttpRequestLib.dao.IFileUploadCallBack;
+import com.sss.framework.Library.HttpRequestLib.dao.IHttpListener;
+import com.sss.framework.Library.HttpRequestLib.dao.IHttpService;
+
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -69,6 +72,25 @@ public class HttpTask implements Runnable {
         iHttpService.setRequestData(requestInfo);
     }
 
+    /**
+     * 文件上传
+     * @param timeOut
+     * @param filePath
+     * @param httpRequestType
+     * @param url
+     * @param iHttpService
+     * @param iHttpListener
+     * @param iFileUploadCallBack
+     */
+    public HttpTask(long timeOut,List<String> filePath, int httpRequestType, String url, IHttpService iHttpService, IHttpListener iHttpListener, IFileUploadCallBack iFileUploadCallBack) {
+        this.iHttpService = iHttpService;
+        this.httpRequestType=httpRequestType;
+        iHttpService.setUrl(url);
+        iHttpService.setTimeOut(timeOut);
+        iHttpService.setIHttpListener(iHttpListener);
+        iHttpService.setUploadFilePaths(filePath);
+        iHttpService.setIFileUploadCallBack(iFileUploadCallBack);
+    }
 
 
     @Override
