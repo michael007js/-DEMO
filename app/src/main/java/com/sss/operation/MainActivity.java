@@ -108,7 +108,7 @@ public class MainActivity extends BaseActivity {
             }
         });
         AMSHookUtil.hookStartActivity(this);
-        startActivity(new Intent(getBaseActivity(),Ac.class));
+//        startActivity(new Intent(getBaseActivity(),Ac.class));
     }
 
 

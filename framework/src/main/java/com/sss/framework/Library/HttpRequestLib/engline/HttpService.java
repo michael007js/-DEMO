@@ -110,7 +110,7 @@ public class HttpService implements IHttpService {
 
     @Override
     public void execute(int httpRequestType) {
-        if (StringUtils.isEmpty(this.url)||!this.url.startsWith("http")) {
+        if (StringUtils.isEmpty(this.url) || !this.url.startsWith("http")) {
             if (iHttpListener != null) {
                 iHttpListener.onFail(ErrorCodeConstant.ErrorUrl, ErrorTipConstant.ErrorUrl);
             }
@@ -452,10 +452,8 @@ public class HttpService implements IHttpService {
         try {
             // 统一资源
             URL url = new URL(urlPath);
-            // 连接类的父类，抽象类
-            URLConnection urlConnection = url.openConnection();
             // http的连接类
-            HttpURLConnection httpURLConnection = (HttpURLConnection) urlConnection;
+            httpURLConnection = (HttpURLConnection)  url.openConnection();
             // 设定请求的方法，默认是GET
             httpURLConnection.setRequestMethod("POST");
             // 设置字符编码

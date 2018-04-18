@@ -12,10 +12,15 @@
         android:layout_height="match_parent">
 
         <LinearLayout
+
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"
             android:orientation="vertical">
+            <com.sss.operation.TextItem
+                android:background="@color/grayness"
+                android:layout_width="300dp"
+                android:layout_height="40dp"/>
             <com.sss.framework.CustomWidget.TextView.Marqueen.SimpleMarqueeView
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/marqueeView"
