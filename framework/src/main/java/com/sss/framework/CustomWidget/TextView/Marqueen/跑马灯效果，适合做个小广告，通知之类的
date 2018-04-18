@@ -1,0 +1,135 @@
+http://www.apkbus.com/forum.php?mod=viewthread&tid=596509&pid=5522957&page=2&extra=
+
+
+step1:
+
+               <com.sss.framework.CustomWidget.TextView.Marqueen.SimpleMarqueeView
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:id="@+id/marqueeView"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:animateFirstView="true"
+                        android:autoStart="true"
+                        android:flipInterval="2500"
+                        android:inAnimation="@anim/in_top"
+                        android:outAnimation="@anim/out_bottom"
+                        app:marqueeAnimDuration="500"
+                        app:smvTextColor="@color/google_blue"
+                        app:smvTextGravity="center_vertical"
+                        app:smvTextSize="15sp">
+
+               </com.sss.framework.CustomWidget.TextView.Marqueen.SimpleMarqueeView>
+
+
+
+step2:
+
+        6种方法来显示，如有启停需要，则可以设置走马灯的启停，如下：
+
+         marqueeView.startFlipping();
+         marqueeView.stopFlipping();
+
+        private final List<String> datas = Arrays.asList("《赋得古原草送别》", "离离原上草，一岁一枯荣。", "野火烧不尽，春风吹又生。", "远芳侵古道，晴翠接荒城。", "又送王孙去，萋萋满别情。", "测试测试测试测试测试测试测试测试测试测试测试");
+
+        1------------------------------------------------------------------------------------------------------------------------
+        SimpleMarqueeView<String>  marqueeView1 = findViewById(R.id.marqueeView1);
+        SimpleMF<String> marqueeFactory = new SimpleMF(MainActivity.this);
+        marqueeFactory.setData(datas);
+        marqueeView1.setMarqueeFactory(marqueeFactory);
+        marqueeView1.startFlipping();
+        marqueeView1.setOnItemClickListener(onSimpleItemClickListener);
+
+        2------------------------------------------------------------------------------------------------------------------------
+        private SimpleMarqueeView<String>  marqueeView1 = findViewById(R.id.marqueeView1);
+        SimpleMarqueeView<String> marqueeView2 = findViewById(R.id.marqueeView2);
+        SimpleMF<String> marqueeFactory2 = new SimpleMF(MainActivity.this);
+        marqueeFactory2.setData(datas);
+        marqueeView2.setMarqueeFactory(marqueeFactory2);
+        marqueeView2.startFlipping();
+        marqueeView2.setOnItemClickListener(onSimpleItemClickListener);
+
+       3------------------------------------------------------------------------------------------------------------------------
+       SimpleMarqueeView<String> marqueeView3 = findViewById(R.id.marqueeView3);
+       SimpleMF<Spanned> marqueeFactory3 = new SimpleMF<>(MainActivity.this);
+               List<Spanned> datas3 = new ArrayList<>();
+               datas3.add(Html.fromHtml("<font color=\"#ff0000\">《赋得古原草送别》</font>"));
+               datas3.add(Html.fromHtml("<font color=\"#00ff00\">离离原上草，</font>一岁一枯荣。"));
+               datas3.add(Html.fromHtml("野火烧不尽，<font color=\"#0000ff\">春风吹又生。</font>"));
+               datas3.add(Html.fromHtml("<font color=\"#333333\">远芳侵古道，晴翠接荒城。</font>"));
+               datas3.add(Html.fromHtml("<font color=\"#ffffff\">又送王孙去，萋萋满别情。</font>"));
+               marqueeFactory3.setData(datas3);
+               marqueeView3.setMarqueeFactory(marqueeFactory3);
+               marqueeView3.startFlipping();
+               marqueeView3.setOnItemClickListener(new OnItemClickListener<TextView, Spanned>() {
+                   @Override
+                   public void onItemClickListener(TextView mView, Spanned mData, int mPosition) {
+                       Toast.makeText(MainActivity.this, String.format("mPosition:%s,mData:%s,mView:%s,.", mPosition, mData, mView), Toast.LENGTH_SHORT).show();
+                   }
+               });
+       }
+
+       4------------------------------------------------------------------------------------------------------------------------
+       MarqueeView<RelativeLayout, Model> marqueeView4 = findViewById(R.id.marqueeView4);
+       List<Model> complexDatas = new ArrayList<>();
+               for (int i = 0; i < 5; i++) {
+                   complexDatas.add(new Model("标题 " + i, "副标题 " + i, "时间 " + i));
+               }
+               MarqueeFactory<RelativeLayout, Model> marqueeFactory = new ComplexViewMF(MainActivity.this);
+
+               marqueeFactory.setData(complexDatas);
+               marqueeView4.setOnItemClickListener(new OnItemClickListener<RelativeLayout, Model>() {
+                   @Override
+                   public void onItemClickListener(RelativeLayout mView, Model mData, int mPosition) {
+                       Toast.makeText(MainActivity.this, String.format("mPosition:%s,mData:%s,mView:%s,.", mPosition, mData, mView), Toast.LENGTH_SHORT).show();
+                   }
+               });
+               marqueeView4.setInAndOutAnim(R.anim.in_top, R.anim.out_bottom);
+               marqueeView4.setMarqueeFactory(marqueeFactory);
+               marqueeView4.startFlipping();
+
+
+        public class ComplexViewMF extends MarqueeFactory<RelativeLayout, Model> {
+            private LayoutInflater inflater;
+
+            public ComplexViewMF(Context mContext) {
+                super(mContext);
+                inflater = LayoutInflater.from(mContext);
+            }
+
+            @Override
+            public RelativeLayout generateMarqueeItemView(Model data) {
+                RelativeLayout mView = (RelativeLayout) inflater.inflate(R.layout.complex_view, null);
+                ((TextView) mView.findViewById(R.id.title)).setText(data.getTitle());
+                ((TextView) mView.findViewById(R.id.secondTitle)).setText(data.getSecondTitle());
+                return mView;
+            }
+        }
+
+       5------------------------------------------------------------------------------------------------------------------------
+        SimpleMarqueeView<String>  marqueeView5 = findViewById(R.id.marqueeView5);
+        marqueeView5 = findViewById(R.id.marqueeView5);
+        SimpleMF<String> marqueeFactory = new SimpleMF(this);
+        marqueeFactory.setData(datas);
+        marqueeView5.setOnItemClickListener(onSimpleItemClickListener);
+        marqueeView5.setMarqueeFactory(marqueeFactory);
+        marqueeView5.startFlipping();
+
+        6------------------------------------------------------------------------------------------------------------------------
+        WeakHandler mHandler = new WeakHandler();
+        SimpleMarqueeView<String> marqueeView6 = findViewById(R.id.marqueeView6);
+           final SimpleMF<String> marqueeFactory = new SimpleMF<>(this);
+               marqueeFactory.setData(datas);
+               marqueeView6.setOnItemClickListener(onSimpleItemClickListener);
+               marqueeView6.setMarqueeFactory(marqueeFactory);
+               marqueeView6.startFlipping();
+
+               //测试重置数据效果
+               mHandler.postDelayed(new Runnable() {
+                   @Override
+                   public void run() {
+                       Random random = new Random();
+                       int delayMillis = (random.nextInt(5) + 4) * 1000;
+                       marqueeFactory.setData(datas);
+                       mHandler.postDelayed(this, delayMillis);
+                   }
+               }, 8000);

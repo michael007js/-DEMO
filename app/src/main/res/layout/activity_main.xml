@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.sss.framework.CustomWidget.ScollView.BounceZoomScrollView
+        android:id="@+id/scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:orientation="vertical">
+            <com.sss.framework.CustomWidget.TextView.Marqueen.SimpleMarqueeView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/marqueeView"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:animateFirstView="true"
+                android:autoStart="true"
+                android:flipInterval="2500"
+                android:inAnimation="@anim/in_top"
+                android:outAnimation="@anim/out_bottom"
+                app:marqueeAnimDuration="500"
+                app:smvTextColor="@color/google_blue"
+                app:smvTextGravity="center_vertical"
+                app:smvTextSize="15sp">
+
+            </com.sss.framework.CustomWidget.TextView.Marqueen.SimpleMarqueeView>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_gravity="center_horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@mipmap/ic_launcher"/>
+
+                <com.baidu.mapapi.map.MapView
+                    android:id="@+id/map"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clickable="true"/>
+            </RelativeLayout>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="8888dp"
+                android:background="@color/mainColor"/>
+
+        </LinearLayout>
+    </com.sss.framework.CustomWidget.ScollView.BounceZoomScrollView>
+
+
+</LinearLayout>

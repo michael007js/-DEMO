@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--右滑返回SwipeBackLayout-->
+    <declare-styleable name="SwipeBackLayout">
+        <attr name="edge_size" format="dimension"/>
+        <attr name="edge_flag">
+            <enum name="left" value="0"/>
+            <enum name="right" value="1"/>
+            <enum name="bottom" value="2"/>
+            <enum name="all" value="3"/>
+        </attr>
+        <attr name="shadow_left" format="reference"/>
+        <attr name="shadow_right" format="reference"/>
+        <attr name="shadow_bottom" format="reference"/>
+    </declare-styleable>
+
+    <attr name="SwipeBackLayoutStyle" format="reference"/>
+    <!--右滑返回SwipeBackLayout-->
+
+
+    <!--SwitchButton-->
+    <declare-styleable name="SwitchButton">
+        <attr name="hasShadow" format="boolean"/>
+        <attr name="primaryColor" format="color"/>
+        <attr name="primaryColorDark" format="color"/>
+        <attr name="isOpened" format="boolean"/>
+    </declare-styleable>
+    <!--SwitchButton-->
+
+    <!--ScrollTab-->
+    <declare-styleable name="ScrollTab">
+        <attr name="stab_type">
+            <enum name="view" value="0"/>
+            <enum name="view_group" value="1"/>
+        </attr>
+        <attr name="stab_titles" format="string"/>
+        <attr name="stab_avag" format="boolean"/>
+        <attr name="stab_padding" format="dimension"/>
+        <attr name="stab_indicator_type">
+            <enum name="trend" value="0"/>
+            <enum name="translation" value="1"/>
+            <enum name="none" value="2"/>
+        </attr>
+        <attr name="stab_indicator_color" format="color"/>
+        <attr name="stab_indicator_width" format="dimension"/>
+        <attr name="stab_indicator_weight" format="dimension"/>
+        <attr name="stab_indicator_radius" format="dimension"/>
+        <attr name="stab_indicator_padding" format="dimension"/>
+        <attr name="stab_duration" format="integer"/>
+    </declare-styleable>
+    <!--ScrollTab-->
+
+    <!--自动设置宽高的ImageView-->
+    <declare-styleable name="RatioImageView">
+        <attr name="ratio" format="float"/>
+    </declare-styleable>
+    <!--自动设置宽高的ImageView-->
+    <!--九宫格-->
+    <declare-styleable name="NineGridLayout">
+        <attr name="sapcing" format="dimension"/>
+    </declare-styleable>
+    <!--九宫格-->
+
+
+    <declare-styleable name="AnimationViewPager">
+        <attr name="style">
+            <enum name="standard" value="0"/>
+            <enum name="tablet" value="1"/>
+            <enum name="cubein" value="2"/>
+            <enum name="cubeout" value="3"/>
+            <enum name="flipvertical" value="4"/>
+            <enum name="fliphorizontal" value="5"/>
+            <enum name="stack" value="6"/>
+            <enum name="zoomin" value="7"/>
+            <enum name="zoomout" value="8"/>
+            <enum name="rotateup" value="9"/>
+            <enum name="rotatedown" value="10"/>
+            <enum name="accordion" value="11"/>
+        </attr>
+        <attr name="fadeEnabled" format="boolean"/>
+        <attr name="outlineEnabled" format="boolean"/>
+        <attr name="outlineColor" format="color|reference"/>
+    </declare-styleable>
+
+
+    <!--底部导航菜单nav-->
+    <declare-styleable name="NavMenuLayout">
+        <!--菜单个数-->
+        <attr name="menuCount" format="integer"/>
+    </declare-styleable>
+    <!--底部导航菜单nav-->
+
+
+    <!--PullToRefresh-->
+    <declare-styleable name="PullToRefresh">
+
+        <!-- A drawable to use as the background of the Refreshable View -->
+        <attr name="ptrRefreshableViewBackground" format="reference|color"/>
+
+        <!-- A drawable to use as the background of the Header and Footer Loading Views -->
+        <attr name="ptrHeaderBackground" format="reference|color"/>
+
+        <!-- Text Color of the Header and Footer Loading Views -->
+        <attr name="ptrHeaderTextColor" format="reference|color"/>
+
+        <!-- Text Color of the Header and Footer Loading Views Sub Header -->
+        <attr name="ptrHeaderSubTextColor" format="reference|color"/>
+
+        <!-- Mode of Pull-to-Refresh that should be used -->
+        <attr name="ptrMode">
+            <flag name="disabled" value="0x0"/>
+            <flag name="pullFromStart" value="0x1"/>
+            <flag name="pullFromEnd" value="0x2"/>
+            <flag name="both" value="0x3"/>
+            <flag name="manualOnly" value="0x4"/>
+
+            <!-- These last two are depreacted -->
+            <flag name="pullDownFromTop" value="0x1"/>
+            <flag name="pullUpFromBottom" value="0x2"/>
+        </attr>
+
+        <!-- Whether the Indicator overlay(类似微博的emoji表情、@人、话题等) should be used -->
+        <attr name="ptrShowIndicator" format="reference|boolean"/>
+
+        <!-- Drawable to use as Loading Indicator. Changes both Header and Footer. -->
+        <attr name="ptrDrawable" format="reference"/>
+
+        <!-- Drawable to use as Loading Indicator in the Header View. Overrides value set in ptrDrawable. -->
+        <attr name="ptrDrawableStart" format="reference"/>
+
+        <!-- Drawable to use as Loading Indicator in the Footer View. Overrides value set in ptrDrawable. -->
+        <attr name="ptrDrawableEnd" format="reference"/>
+
+        <!-- Whether Android'类似微博的emoji表情、@人、话题等 built-in Over Scroll should be utilised for Pull-to-Refresh. -->
+        <attr name="ptrOverScroll" format="reference|boolean"/>
+
+        <!-- Base text color, typeface, size, and style for Header and Footer Loading Views -->
+        <attr name="ptrHeaderTextAppearance" format="reference"/>
+
+        <!-- Base text color, typeface, size, and style for Header and Footer Loading Views Sub Header -->
+        <attr name="ptrSubHeaderTextAppearance" format="reference"/>
+
+        <!-- Style of Animation should be used displayed when pulling. -->
+        <attr name="ptrAnimationStyle">
+            <flag name="rotate" value="0x0"/>
+            <flag name="flip" value="0x1"/>
+        </attr>
+
+        <!-- Whether the user can scroll while the View is Refreshing -->
+        <attr name="ptrScrollingWhileRefreshingEnabled" format="reference|boolean"/>
+
+        <!--
+        	Whether PullToRefreshListView has it'类似微博的emoji表情、@人、话题等 extras enabled. This allows the user to be
+        	able to scroll while refreshing, and behaves better. It acheives this by adding
+        	Header and/or Footer Views to the ListView.
+        -->
+        <attr name="ptrListViewExtrasEnabled" format="reference|boolean"/>
+
+        <!--
+        	Whether the Drawable should be continually rotated as you pull. This only
+        	takes effect when using the 'Rotate' Animation Style.
+        -->
+        <attr name="ptrRotateDrawableWhilePulling" format="reference|boolean"/>
+
+        <!-- BELOW HERE ARE DEPRECEATED. DO NOT USE. -->
+        <attr name="ptrAdapterViewBackground" format="reference|color"/>
+        <attr name="ptrDrawableTop" format="reference"/>
+        <attr name="ptrDrawableBottom" format="reference"/>
+    </declare-styleable>
+    <!--PullToRefresh-->
+
+
+    <!--SwipeMenuLayout-->
+    <declare-styleable name="SwipeMenuLayout">
+        <attr name="swipeEnable" format="boolean"/>
+        <attr name="ios" format="boolean"/>
+        <attr name="leftSwipe" format="boolean"/>
+    </declare-styleable>
+    <!--SwipeMenuLayout-->
+
+    <!--WaveSideBar-->
+    <declare-styleable name="WaveSideBar">
+        <attr name="sidebar_lazy_respond" format="boolean"/>
+        <attr name="sidebar_text_size" format="dimension"/>
+        <attr name="sidebar_text_color" format="color"/>
+        <attr name="sidebar_max_offset" format="dimension"/>
+        <attr name="sidebar_position" format="enum">
+            <enum name="right" value="0"/>
+            <enum name="left" value="1"/>
+        </attr>
+        <attr name="sidebar_text_alignment" format="enum">
+            <enum name="center" value="0"/>
+            <enum name="left" value="1"/>
+            <enum name="right" value="2"/>
+        </attr>
+    </declare-styleable>
+    <!--WaveSideBar-->
+
+    <!--RichView-->
+    <declare-styleable name="RichEditText">
+        <attr name="richMaxLength" format="integer"/>
+        <attr name="richIconSize" format="dimension"/>
+        <attr name="editTextAtUtilJumpListener" format="reference"/>
+        <attr name="richEditTopicList" format="reference"/>
+        <attr name="richEditNameList" format="reference"/>
+        <attr name="richEditColorAtUser" format="string"/>
+        <attr name="richEditColorTopic" format="string"/>
+    </declare-styleable>
+
+    <declare-styleable name="EmojiLayout">
+        <attr name="richIndicatorFocus" format="integer|reference"/>
+        <attr name="richIndicatorUnFocus" format="integer|reference"/>
+        <attr name="richDeleteIconName" format="string"/>
+        <attr name="richMarginBottom" format="dimension"/>
+        <attr name="richMarginTop" format="dimension"/>
+        <attr name="richLayoutNumColumns" format="integer|reference"/>
+        <attr name="richLayoutNumRows" format="integer|reference"/>
+    </declare-styleable>
+
+    <declare-styleable name="RichTextView">
+        <attr name="needNumberShow" format="boolean"/>
+        <attr name="needUrlShow" format="boolean"/>
+        <attr name="richText" format="string"/>
+        <attr name="topicList" format="reference"/>
+        <attr name="nameList" format="reference"/>
+        <attr name="atColor" format="color"/>
+        <attr name="topicColor" format="color"/>
+        <attr name="linkColor" format="color"/>
+        <attr name="emojiSize" format="integer|reference"/>
+        <attr name="emojiVerticalAlignment" format="integer|reference"/>
+        <attr name="spanUrlCallBackListener" format="reference"/>
+        <attr name="spanAtUserCallBackListener" format="reference"/>
+        <attr name="spanTopicCallBackListener" format="reference"/>
+        <attr name="spanCreateListener" format="reference"/>
+    </declare-styleable>
+    <!--RichView-->
+
+
+    <!--popmenu-->
+
+    <style name="PopupMenuStyle">
+        <item name="android:windowEnterAnimation">@anim/popup_enter</item>
+        <item name="android:windowExitAnimation">@anim/popup_exit</item>
+    </style>
+    <!--popmenu-->
+
+
+    <!--shapeLoadingView   com.sss.framework.CustomWidget.Loading.shapeloading-->
+    <declare-styleable name="LoadingView">
+        <attr name="loadingText" format="string|reference"/>
+        <attr name="loadingTextAppearance" format="reference"/>
+        <attr name="delay" format="integer|reference"/>
+    </declare-styleable>
+    <!--shapeLoadingView   com.sss.framework.CustomWidget.Loading.shapeloading-->
+
+    <!--CircleProgress  com.sss.framework.CustomWidget.Loading.Circle-->
+    <declare-styleable name="CircleProgress">
+        <attr name="color1" format="reference|color"/>
+        <attr name="color2" format="reference|color"/>
+        <attr name="color3" format="reference|color"/>
+    </declare-styleable>
+    <!--CircleProgress  com.sss.framework.CustomWidget.Loading.Circle-->
+
+
+    <!--SpinnerLoading  com.sss.framework.CustomWidget.Loading.spinnerloading-->
+    <declare-styleable name="SpinnerLoading">
+        <attr name="circle_color" format="color"/>
+        <attr name="circle_color_move" format="color"/>
+    </declare-styleable>
+    <!--SpinnerLoading  com.sss.framework.CustomWidget.Loading.spinnerloading-->
+
+
+    <!--ExpandableTextView-->
+    <declare-styleable name="ExpandableTextView">
+        <attr name="maxCollapsedLines" format="integer"/>
+        <attr name="animDuration" format="integer"/>
+        <attr name="animAlphaStart" format="float"/>
+        <attr name="expandDrawable" format="reference"/>
+        <attr name="collapseDrawable" format="reference"/>
+    </declare-styleable>
+
+    <!--ExpandableTextView-->
+
+
+    <!--com.sss.framework.CustomWidget.TextView.Marqueen.MarqueeView-->
+    <declare-styleable name="MarqueeView">
+        <attr name="marqueeAnimDuration" format="integer"/>
+    </declare-styleable>
+    <declare-styleable name="SimpleMarqueeView">
+        <attr name="smvTextColor" format="reference|color"/>
+        <attr name="smvTextSize" format="dimension"/>
+        <!-- https://github.com/android/platform_frameworks_base/blob/master/core/res/res/values/attrs.xml  -->
+        <attr name="smvTextGravity">
+            <!--  Push object to the top of its container, not changing its size.  -->
+            <flag name="top" value="0x30"/>
+            <!--  Push object to the bottom of its container, not changing its size. -->
+            <flag name="bottom" value="0x50"/>
+            <!--  Push object to the left of its container, not changing its size.  -->
+            <flag name="left" value="0x03"/>
+            <!--  Push object to the right of its container, not changing its size.    -->
+            <flag name="right" value="0x05"/>
+            <!--  Place object in the vertical center of its container, not changing its size.   -->
+            <flag name="center_vertical" value="0x10"/>
+            <!--  Grow the vertical size of the object if needed so it completely fills its container.  -->
+            <flag name="fill_vertical" value="0x70"/>
+            <!--  Place object in the horizontal center of its container, not changing its size.  -->
+            <flag name="center_horizontal" value="0x01"/>
+            <!--  Grow the horizontal size of the object if needed so it completely fills its container.   -->
+            <flag name="fill_horizontal" value="0x07"/>
+            <!--  Place the object in the center of its container in both the vertical and horizontal axis, not changing its size.  -->
+            <flag name="center" value="0x11"/>
+            <!--  Grow the horizontal and vertical size of the object if needed so it completely fills its container.  -->
+            <flag name="fill" value="0x77"/>
+            <!--  Additional option that can be set to have the top and/or bottom edges of
+                        the child clipped to its container's bounds.
+                        The clip will be based on the vertical gravity: a top gravity will clip the bottom
+                        edge, a bottom gravity will clip the top edge, and neither will clip both edges.  -->
+            <flag name="clip_vertical" value="0x80"/>
+            <!--  Additional option that can be set to have the left and/or right edges of
+                        the child clipped to its container's bounds.
+                        The clip will be based on the horizontal gravity: a left gravity will clip the right
+                        edge, a right gravity will clip the left edge, and neither will clip both edges.  -->
+            <flag name="clip_horizontal" value="0x08"/>
+            <!--  Push object to the beginning of its container, not changing its size. -->
+            <flag name="start" value="0x00800003"/>
+            <!--  Push object to the end of its container, not changing its size.  -->
+            <flag name="end" value="0x00800005"/>
+        </attr>
+        <attr name="smvTextSingleLine" format="boolean"/>
+        <!--  Where to ellipsize text.  -->
+        <attr name="smvTextEllipsize">
+            <enum name="none" value="0"/>
+            <enum name="start" value="1"/>
+            <enum name="middle" value="2"/>
+            <enum name="end" value="3"/>
+        </attr>
+    </declare-styleable>
+    <!--com.sss.framework.CustomWidget.TextView.Marqueen.MarqueeView-->
+
+</resources>

@@ -1,0 +1,5 @@
+
+    https://github.com/BolexLiu/AndroidHookStartActivity
+
+    AMSHookUtil.hookStartActivity(this);
+    startActivity(new Intent(getBaseActivity(),XXX.class));

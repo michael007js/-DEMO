@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--popwindow-->
+    <dimen name="pop_item_padding">10dp</dimen>
+    <dimen name="pop_item_text_size">18sp</dimen>
+    <dimen name="pop_line_height">1dp</dimen>
+    <dimen name="pop_radius">8dp</dimen>
+    <dimen name="pop_action_sheet_text_size_title">16sp</dimen>
+    <dimen name="pop_action_sheet_text_size_message">14sp</dimen>
+    <!--popwindow-->
+
+
+    <!--pull_to_refresh_header_horizontal.xml-->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="indicator_right_padding">10dp</dimen>
+    <dimen name="indicator_corner_radius">12dp</dimen>
+    <dimen name="indicator_internal_padding">4dp</dimen>
+    <dimen name="header_footer_left_right_padding">24dp</dimen>
+    <dimen name="header_footer_top_bottom_padding">12dp</dimen>
+    <!--pull_to_refresh_header_horizontal.xml-->
+</resources>

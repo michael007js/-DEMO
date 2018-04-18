@@ -1,0 +1,198 @@
+apply plugin: 'com.android.library'
+
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion '26.0.2'
+    defaultConfig {
+        minSdkVersion 16
+        versionCode 1
+        versionName "1.0.0"
+        multiDexEnabled true
+
+    }
+    lintOptions {
+        abortOnError false
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['lib']  // 设置加载so的路径
+        }
+    }
+
+
+    packagingOptions {
+
+    }
+    //加上这些
+    tasks.withType(Javadoc) {
+        options{ encoding "UTF-8"
+            charSet 'UTF-8'
+            links "http://docs.oracle.com/javase/7/docs/api"
+        }
+    }
+
+}
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:design:25.2.0'
+    testCompile 'junit:junit:4.12'
+    //fresco
+    compile 'com.facebook.fresco:fresco:0.12.0'
+    compile 'com.facebook.fresco:animated-gif:0.12.0'
+    //3D地图
+    compile 'com.amap.api:3dmap:latest.integration'
+    //2D地图
+    compile 'com.amap.api:map2d:latest.integration'
+    //此处注释是为了避免与融云定位冲突
+    //搜索
+    compile 'com.amap.api:search:latest.integration'
+    //此处注释是为了避免与融云定位冲突
+    //定位
+    compile 'com.amap.api:location:latest.integration'
+    //class not found
+    compile 'com.nineoldandroids:library:2.4.0'
+    //class not found
+    compile 'com.networkbench.newlens.agent.android:nbs.newlens.agent:2.7.0'
+    //okhttp
+    compile 'com.squareup.okhttp3:okhttp:3.7.0'
+    // Android LitePal数据库
+    compile 'org.litepal.android:core:1.5.1'
+    //multidex
+    compile 'com.android.support:multidex:1.0.0'
+    //拼音
+    compile files('libs/pinyin4j-2.5.0.jar')
+    // Android图片单选/多选、拍照、裁剪、压缩。视频选择和录制 https://github.com/FinalTeam/RxGalleryFinal
+    //参考地址https://github.com/pengjianbo/GalleryFinal
+    compile 'cn.finalteam:galleryfinal:1.4.8.7'
+    //动态权限申请库https://github.com/yewei02538/HiPermission
+    compile 'me.weyye.hipermission:library:1.0.6'
+    //底部Dialog  http://www.cnblogs.com/lovelyYakir/p/5836013.html
+    compile 'com.github.rey5137:material:1.2.2'
+    //android 4.4以上沉浸式状态栏和沉浸式导航栏管理，一句代码轻松实现https://github.com/gyf-dev/ImmersionBar
+    compile 'com.gyf.barlibrary:barlibrary:2.2.6'
+    //↓一个简单，强大的广告活动弹窗控件所需要的依赖包https://github.com/yipianfengye/android-adDialog
+    compile 'com.flyco.pageindicator:FlycoPageIndicator_Lib:1.0.0@aar'
+    compile 'com.malinskiy:materialicons:1.0.2'
+    //↑
+    //↓https://github.com/greenrobot/EventBus
+    //http://blog.csdn.net/harvic880925/article/details/40660137
+    compile 'org.greenrobot:eventbus:3.0.0'
+    //↑
+    compile files('libs/cpdetector.jar')
+    compile files('libs/zxing.jar')
+    compile files('libs/glide-3.6.1.jar')
+    compile files('libs/chardet-1.0.jar')
+    //角标适配 https://github.com/leolin310148/ShortcutBadger
+    compile 'me.leolin:ShortcutBadger:1.1.16@aar'
+    //BluetoothKit蓝牙框架
+    compile 'com.inuker.bluetooth:library:1.4.0'
+    compile files('libs/sun.misc.BASE64Decoder.jar')
+    /*google百分比布局*/
+    compile 'com.android.support:percent:25.3.1'
+
+
+}
+
+
+
+
+
+
+
+apply plugin: 'com.github.dcendents.android-maven' //you add
+apply plugin: 'com.jfrog.bintray' //you add
+version = "1.0.0" //your version
+
+def siteUrl = 'https://github.com/michael007js/FrameWork'    // github project homepage
+def gitUrl = 'https://github.com/michael007js/FrameWork.git' // github project git
+group = "com.sss"
+//如果你的group 是这样的 那么上传后是这样的： compile 'com.sss:AndroidFramework:1.0.0'
+//AndroidFramework:1.0.0 是后面设置(名字和版本号)
+
+install {
+    repositories.mavenInstaller {
+        // This generates POM.xml with proper parameters
+        pom {
+            project {
+                packaging 'aar'
+                name 'This is the development lib For Android' //这里是简单介绍
+                url siteUrl
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id 'michael007s' //开发者id
+                        name 'SSS' //开发者 名字
+                        email 'michael007js0@gmail.com'
+                    }
+                }
+                scm {
+                    connection gitUrl
+                    developerConnection gitUrl
+                    url siteUrl
+                }
+            }
+        }
+    }
+}
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+tasks.withType(Javadoc).all {
+    enabled = false
+}
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
+
+Properties properties = new Properties()
+//将User和apikey写到local.properties中 然后git提交的时候将local.properties忽略掉， 这样安全
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+bintray {
+    user = properties.getProperty("BINTRAY_USER")
+    key = properties.getProperty("BINTRAY_KEY")
+    configurations = ['archives']
+    pkg {
+        repo = "maven"
+        name = "AndroidFramework"
+        websiteUrl = siteUrl
+        vcsUrl = gitUrl
+        licenses = ["Apache-2.0"]
+        publish = true
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

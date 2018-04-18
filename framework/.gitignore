@@ -1,0 +1,39 @@
+# 构建应用程序文件
+*.apk
+*.ap_
+
+# Dalvik虚拟机的文件
+*.dex
+
+# Java类文件
+*.class
+
+# 生成的文件
+bin/
+gen/
+out/
+
+# Gradle文件
+.gradle/
+build/
+
+# 本地配置文件（sdk路径，等等）
+local.properties
+
+# 由Eclipse生成的Proguard文件夹
+proguard/
+
+# 日志文件
+*.log
+
+# Android Studio导航编辑器临时文件
+.navigation/
+
+# Android Studio捕获文件夹
+captures/
+
+# 集成开发平台
+*.iml
+
+# 密钥存储库文件
+*.jks

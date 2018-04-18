@@ -1,0 +1,83 @@
+http://blog.csdn.net/AndroidMsky/article/details/50248937
+
+16个效果名：
+
+0.左右黏合滑动
+1.快速消失切入
+2.3D向前飞出屏幕
+3.3D箱子旋转
+4.平移
+5.卡片左右翻页
+6.卡片上下翻页
+7.等比放大缩小
+8左右带角度平移1
+9左右带角度平移2
+10.好像没有写case10.
+11.遮盖翻页
+12.内旋3D翻页
+13.不翻页中心缩小
+14.左右半透明平移
+15.改变透明度变换
+16.左右黏贴平移
+
+找到源头。其实安卓早就为我们提供了各种各样的viewpager切换动画API ，我们只需重写们只需写一行代码
+
+viewPager.setPageTransformer(true,
+                                new DepthPageTransformer());
+1
+2
+第一个参数true就是 是否开启动画的意思。来我们看看第二个类是什么：
+
+public class DepthPageTransformer extends ABaseTransformer {
+
+    private static final float MIN_SCALE = 0.75f;
+
+    @Override
+    protected void onTransform(View view, float position) {
+        if (position <= 0f) {
+            view.setTranslationX(0f);
+            view.setScaleX(1f);
+            view.setScaleY(1f);
+        } else if (position <= 1f) {
+            final float scaleFactor = MIN_SCALE + (1 - MIN_SCALE) * (1 - Math.abs(position));
+            view.setAlpha(1 - position);
+            view.setPivotY(0.5f * view.getHeight());
+            view.setTranslationX(view.getWidth() * -position);
+            view.setScaleX(scaleFactor);
+            view.setScaleY(scaleFactor);
+        }
+    }
+
+    @Override
+    protected boolean isPagingEnabled() {
+        return true;
+    }
+
+}
+public class DepthPageTransformer extends ABaseTransformer {
+
+    private static final float MIN_SCALE = 0.75f;
+
+    @Override
+    protected void onTransform(View view, float position) {
+        if (position <= 0f) {
+            view.setTranslationX(0f);
+            view.setScaleX(1f);
+            view.setScaleY(1f);
+        } else if (position <= 1f) {
+            final float scaleFactor = MIN_SCALE + (1 - MIN_SCALE) * (1 - Math.abs(position));
+            view.setAlpha(1 - position);
+            view.setPivotY(0.5f * view.getHeight());
+            view.setTranslationX(view.getWidth() * -position);
+            view.setScaleX(scaleFactor);
+            view.setScaleY(scaleFactor);
+        }
+    }
+
+    @Override
+    protected boolean isPagingEnabled() {
+        return true;
+    }
+
+}
+其实就是在定义自己的动画了，这里就不细说，大家想要什么效果自己拿去，如果还不够就自己去写ABaseTransformer吧.
