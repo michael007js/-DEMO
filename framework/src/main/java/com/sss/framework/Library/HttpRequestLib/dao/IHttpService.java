@@ -20,26 +20,27 @@ public interface IHttpService {
     /**
      * 设置请求地址
      *
-     * @param url
+     * @param url 请求地址
      */
     void setUrl(String url);
 
     /**
      * 设置请求数据
      *
-     * @param requestData
+     * @param requestData 字符串请求参数
      */
     void setRequestData(String requestData);
 
     /**
-     * 设置请求数据
+     * 设置请求数据(键值对)
      *
-     * @param requestData
+     * @param requestData 键值对请求参数
      */
     void setRequestData(Map<String, String> requestData);
 
     /**
      * 提交请求
+     * @param httpRequestType 请求类型（详情参见HttpRequestType）
      */
     void execute(int httpRequestType);
 

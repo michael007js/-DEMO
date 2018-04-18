@@ -1,13 +1,15 @@
 package com.sss.framework.Library.HttpRequestLib.engline;
 
 
-import com.sss.framework.Library.HttpRequestLib.HttpRequestType;
 import com.sss.framework.Library.HttpRequestLib.constant.ErrorCodeConstant;
+import com.sss.framework.Library.HttpRequestLib.constant.ErrorTipConstant;
+import com.sss.framework.Library.HttpRequestLib.constant.HttpRequestType;
 import com.sss.framework.Library.HttpRequestLib.dao.IFileUploadCallBack;
 import com.sss.framework.Library.HttpRequestLib.dao.IHttpListener;
 import com.sss.framework.Library.HttpRequestLib.dao.IHttpService;
 import com.sss.framework.Library.HttpRequestLib.util.HttpParseResponse;
 import com.sss.framework.Library.Log.LogUtils;
+import com.sss.framework.Utils.StringUtils;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -108,16 +110,32 @@ public class HttpService implements IHttpService {
 
     @Override
     public void execute(int httpRequestType) {
-        if (HttpRequestType.Post_String == httpRequestType) {
-            httpPostString();
-        } else if (HttpRequestType.Get == httpRequestType) {
-            httpGet();
-        } else if (HttpRequestType.Post_Key_Value == httpRequestType) {
-            postKeyValue();
-        } else if (HttpRequestType.fileUpload == httpRequestType) {
-            uploadFile();
+        if (StringUtils.isEmpty(this.url)||!this.url.startsWith("http")) {
+            if (iHttpListener != null) {
+                iHttpListener.onFail(ErrorCodeConstant.ErrorUrl, ErrorTipConstant.ErrorUrl);
+            }
+            return;
         }
-
+        switch (httpRequestType) {
+            case HttpRequestType.Post_String:
+                httpPostString();
+                break;
+            case HttpRequestType.Get:
+                httpGet();
+                break;
+            case HttpRequestType.Post_Key_Value:
+                postKeyValue();
+                break;
+            case HttpRequestType.File_Upload:
+                if (uploadFilePaths == null || uploadFilePaths.size() == 0) {
+                    if (iHttpListener != null) {
+                        iHttpListener.onFail(ErrorCodeConstant.NoFiles, ErrorTipConstant.NoFiles);
+                    }
+                    return;
+                }
+                uploadFile();
+                break;
+        }
     }
 
     /**
@@ -289,7 +307,7 @@ public class HttpService implements IHttpService {
 
 
     /**
-     * 多文件上传
+     * 文件上传
      */
     private void uploadFile() {
         String end = "\r\n";

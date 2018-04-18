@@ -4,6 +4,7 @@ package com.sss.framework.Library.HttpRequestLib;
 
 import com.sss.framework.Library.HttpRequestLib.biz.HttpTask;
 import com.sss.framework.Library.HttpRequestLib.biz.HttpThreadChange;
+import com.sss.framework.Library.HttpRequestLib.constant.HttpRequestType;
 import com.sss.framework.Library.HttpRequestLib.dao.IDataListener;
 import com.sss.framework.Library.HttpRequestLib.dao.IFileUploadCallBack;
 import com.sss.framework.Library.HttpRequestLib.dao.IHttpListener;
@@ -32,7 +33,7 @@ public class HttpRequestUtils {
         IHttpService iHttpService = new HttpService();
         IHttpListener iHttpListener = new HttpThreadChange(iDataListener);
         HttpTask httpTask = new HttpTask(requestInfo, timeOut, HttpRequestType.Post_String, url, iHttpService, iHttpListener);
-        ThreadPoolManage.getInstance().setTimeOut(timeOut).execute(httpTask);
+        HttpThreadPoolManage.getInstance().setTimeOut(timeOut).execute(httpTask);
     }
 
     /**
@@ -47,7 +48,7 @@ public class HttpRequestUtils {
         IHttpService iHttpService = new HttpService();
         IHttpListener iHttpListener = new HttpThreadChange(iDataListener);
         HttpTask httpTask = new HttpTask(requestInfo, timeOut, HttpRequestType.Post_Key_Value, url, iHttpService, iHttpListener);
-        ThreadPoolManage.getInstance().setTimeOut(timeOut).execute(httpTask);
+        HttpThreadPoolManage.getInstance().setTimeOut(timeOut).execute(httpTask);
     }
 
     /**
@@ -61,7 +62,7 @@ public class HttpRequestUtils {
         IHttpService iHttpService = new HttpService();
         IHttpListener iHttpListener = new HttpThreadChange(iDataListener);
         HttpTask httpTask = new HttpTask(timeOut, HttpRequestType.Get, url, iHttpService, iHttpListener);
-        ThreadPoolManage.getInstance().setTimeOut(timeOut).execute(httpTask);
+        HttpThreadPoolManage.getInstance().setTimeOut(timeOut).execute(httpTask);
 
     }
 
@@ -75,8 +76,8 @@ public class HttpRequestUtils {
     public static void doPostUploadFiles(long timeOut, String url, List<String> filePath, IDataListener iDataListener, IFileUploadCallBack iFileUploadCallBack) {
         IHttpService iHttpService = new HttpService();
         IHttpListener iHttpListener = new HttpThreadChange(iDataListener);
-        HttpTask httpTask = new HttpTask(timeOut, filePath,HttpRequestType.Get, url, iHttpService, iHttpListener,iFileUploadCallBack);
-        ThreadPoolManage.getInstance().setTimeOut(timeOut).execute(httpTask);
+        HttpTask httpTask = new HttpTask(timeOut, filePath,HttpRequestType.File_Upload, url, iHttpService, iHttpListener,iFileUploadCallBack);
+        HttpThreadPoolManage.getInstance().setTimeOut(timeOut).execute(httpTask);
     }
 
 }

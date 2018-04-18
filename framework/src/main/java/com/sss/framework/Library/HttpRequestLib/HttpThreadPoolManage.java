@@ -7,8 +7,11 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 
-public class ThreadPoolManage {
-    private static ThreadPoolManage threadPoolManage;
+/**
+ * Http线程池管理类
+ */
+public class HttpThreadPoolManage {
+    private static HttpThreadPoolManage threadPoolManage;
     /**
      * 核心线程数
      */
@@ -35,16 +38,16 @@ public class ThreadPoolManage {
      */
     private LinkedBlockingQueue queue = new LinkedBlockingQueue();
 
-    public static ThreadPoolManage getInstance() {
+    public static HttpThreadPoolManage getInstance() {
         if (threadPoolManage == null) {
-            threadPoolManage = new ThreadPoolManage();
+            threadPoolManage = new HttpThreadPoolManage();
         }
         return threadPoolManage;
 
     }
 
 
-    private ThreadPoolManage() {
+    private HttpThreadPoolManage() {
         threadPoolExecutor = new ThreadPoolExecutor(corePoolSize, maxPoolSize, timeOut, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(capacity));
         threadPoolExecutor.execute(workThread);
     }
@@ -55,7 +58,7 @@ public class ThreadPoolManage {
      * @param runnable
      * @return
      */
-    public ThreadPoolManage execute(Runnable runnable) {
+    public HttpThreadPoolManage execute(Runnable runnable) {
         if (runnable != null) {
             try {
                 queue.put(runnable);
@@ -102,7 +105,7 @@ public class ThreadPoolManage {
      *
      * @param corePoolSize
      */
-    public ThreadPoolManage setCorePoolSize(int corePoolSize) {
+    public HttpThreadPoolManage setCorePoolSize(int corePoolSize) {
         this.corePoolSize = corePoolSize;
         return threadPoolManage;
     }
@@ -112,7 +115,7 @@ public class ThreadPoolManage {
      *
      * @param maxPoolSize
      */
-    public ThreadPoolManage setMaxPoolSize(int maxPoolSize) {
+    public HttpThreadPoolManage setMaxPoolSize(int maxPoolSize) {
         this.maxPoolSize = maxPoolSize;
         return threadPoolManage;
     }
@@ -122,7 +125,7 @@ public class ThreadPoolManage {
      *
      * @param timeOut
      */
-    public ThreadPoolManage setTimeOut(long timeOut) {
+    public HttpThreadPoolManage setTimeOut(long timeOut) {
         this.timeOut = timeOut;
         return threadPoolManage;
     }
@@ -132,7 +135,7 @@ public class ThreadPoolManage {
      *
      * @param capacity
      */
-    public ThreadPoolManage setCapacity(int capacity) {
+    public HttpThreadPoolManage setCapacity(int capacity) {
         this.capacity = capacity;
         return threadPoolManage;
     }
