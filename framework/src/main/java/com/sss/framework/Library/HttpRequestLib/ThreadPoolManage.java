@@ -72,7 +72,7 @@ public class ThreadPoolManage {
     private RejectedExecutionHandler rejectedExecutionHandler = new RejectedExecutionHandler() {
         @Override
         public void rejectedExecution(Runnable r, ThreadPoolExecutor executor) {
-
+            executor.execute(r);
         }
     };
     /**
