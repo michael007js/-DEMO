@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="__local_jars__:C.\Operation\framework\libs\zxing.jar:unspecified@jar">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/framework/libs/zxing.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

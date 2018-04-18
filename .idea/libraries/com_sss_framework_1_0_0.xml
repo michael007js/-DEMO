@@ -1,0 +1,18 @@
+<component name="libraryTable">
+  <library name="com.sss:framework-1.0.0">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.sss/framework/1.0.0/res" />
+      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.sss/framework/1.0.0/jars/libs/cpdetector.jar!/" />
+      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.sss/framework/1.0.0/jars/libs/chardet-1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.sss/framework/1.0.0/jars/libs/sun.misc.BASE64Decoder.jar!/" />
+      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.sss/framework/1.0.0/jars/libs/glide-3.6.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.sss/framework/1.0.0/jars/libs/zxing.jar!/" />
+      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.sss/framework/1.0.0/jars/libs/pinyin4j-2.5.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.sss/framework/1.0.0/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.sss/framework/1.0.0/9bfd795056edb52b92cce183a4fc998586c9f1f0/framework-1.0.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

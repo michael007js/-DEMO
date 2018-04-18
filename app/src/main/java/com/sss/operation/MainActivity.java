@@ -1,5 +1,6 @@
 package com.sss.operation;
 
+import android.content.Intent;
 import android.view.View;
 
 import com.baidu.mapapi.map.MapView;
@@ -9,6 +10,7 @@ import com.sss.framework.CustomWidget.ScollView.BounceZoomScrollView;
 import com.sss.framework.CustomWidget.TextView.Marqueen.SimpleMF;
 import com.sss.framework.CustomWidget.TextView.Marqueen.SimpleMarqueeView;
 import com.sss.framework.CustomWidget.TextView.Marqueen.util.OnItemClickListener;
+import com.sss.framework.Hook.AMSHookUtil;
 import com.sss.framework.Library.Log.LogUtils;
 import com.sss.framework.Model.TargetInfoModel;
 import com.sss.framework.Utils.PermissionUtils;
@@ -105,8 +107,8 @@ public class MainActivity extends BaseActivity {
 
             }
         });
-//        AMSHookUtil.hookStartActivity(this);
-//        startActivity(new Intent(getBaseActivity(),Ac.class));
+        AMSHookUtil.hookStartActivity(this);
+        startActivity(new Intent(getBaseActivity(),Ac.class));
     }
 
 
